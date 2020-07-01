@@ -1,0 +1,23 @@
+if (isset($_SERVER["HTTP_ORIGIN"]) === true) {
+      $origin = $_SERVER["HTTP_ORIGIN"];
+      //array of origins in which page will accept
+      $allowed_origins = array(
+        "http://127.0.0.1:8080",
+        "http://localhost:8080"
+      );
+      
+      //if origin is in allowed array, set header with matching origin, append additional headers
+      if (in_array($origin, $allowed_origins, true) === true) {
+        header('Access-Control-Allow-Origin: ' . $origin);
+        
+        //Additional header options not related
+        //header('Access-Control-Allow-Credentials: true');
+        //header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS');
+        //header('Access-Control-Allow-Headers: X-PINGOTHER, Origin, X-Requested-With, Content-Type');
+      }
+      
+      //if it is an options request, stop processing script.. no further response needed
+      if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
+        exit; 
+      }
+    }
